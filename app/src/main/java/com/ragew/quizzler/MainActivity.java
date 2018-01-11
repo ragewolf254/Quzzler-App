@@ -63,6 +63,15 @@ public class MainActivity extends Activity {
 
         m_progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
+        if (savedInstanceState != null){
+            m_score = savedInstanceState.getInt("ScoreKey");
+            m_scoreView.setText("Score " + m_score + "/" + mQuestionBank.length);
+            m_index = savedInstanceState.getByte("IndexKey");
+        } else {
+            m_score = 0;
+            m_index = (m_index + 1) % mQuestionBank.length;
+        }
+
         m_TrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +123,15 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_LONG).show();
             m_progressBar.incrementProgressBy(PROGRESS_BAR_INCREMENT);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle offState){
+        super.onSaveInstanceState(offState);
+
+        offState.putInt("ScoreKey",m_score);
+        offState.putInt("IndexKey",m_index);
+
     }
 
 }
