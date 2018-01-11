@@ -52,6 +52,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState != null){
+            m_score = savedInstanceState.getInt("ScoreKey");
+            m_index = savedInstanceState.getInt("IndexKey");
+        } else {
+            m_score = 0;
+            m_index = 0;
+        }
+
         m_TrueButton = (Button) findViewById(R.id.true_button);
         m_FalseButton = (Button) findViewById(R.id.false_button);
         m_questionView = (TextView) findViewById(R.id.question_text_view);
@@ -62,15 +70,7 @@ public class MainActivity extends Activity {
         m_scoreView = (TextView) findViewById(R.id.score);
 
         m_progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-        if (savedInstanceState != null){
-            m_score = savedInstanceState.getInt("ScoreKey");
-            m_scoreView.setText("Score " + m_score + "/" + mQuestionBank.length);
-            m_index = savedInstanceState.getByte("IndexKey");
-        } else {
-            m_score = 0;
-            m_index = (m_index + 1) % mQuestionBank.length;
-        }
+        m_scoreView.setText("Score " + m_score + "/" + mQuestionBank.length);
 
         m_TrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
